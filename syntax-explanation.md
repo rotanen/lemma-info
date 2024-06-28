@@ -21,7 +21,8 @@ I do have a working parser for Lemma syntax (written in Haskell) and it is evolv
     main = print "Hello World!"
 
 ## Basic expressions
-Function calls use whitespace-separated arguments, as in Haskell and many other functional programming languages:
+Function calls use whitespace-separated arguments, as in Haskell and many other
+functional programming languages:
 
     map double list
 
@@ -256,7 +257,8 @@ Effect definitions look like this:
     ]
 
 Within a computation, the definition operator `=!` works similar to Haskell's `<-` in monadic do-notation.
-It indicates that the right-hand side should be run once and its value assigned to the left-hand side before continuing the computation:
+It indicates that the right-hand side should be run once and its value assigned to the left-hand side before
+continuing the computation:
 
     @ (s -> s) -> [State s] ()
     modify f = [
@@ -279,7 +281,7 @@ The above represents the type of a computation with IO and State Int effects, an
 
 Effect handlers are functions that pattern-match on suspended computations. The syntax is a bit difficult to explain without an example:
 
-    @ s -> [State s] a -> a
+    @ s -> [State s, e] a -> [e] a
     runState init = [
       [pure]:      pure
       [get | k]:   runState init (k init)
