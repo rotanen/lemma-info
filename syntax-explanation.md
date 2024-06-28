@@ -13,9 +13,15 @@ Lemma has syntactically meaningful newlines, but not syntactically meaningful in
 
 I do have a working parser for Lemma syntax (written in Haskell) and it is evolving into a compiler. I also have a "repl" to test the parser interactively. I admit that I hyperfocused on syntax design because parsers are very easy for me to write.
 
+## Hello World!
+
+    module HelloWorld
+
+    @ [IO] ()
+    main = print "Hello World!"
+
 ## Basic expressions
-Function calls use whitespace-separated arguments, as in Haskell and many other
-functional programming languages:
+Function calls use whitespace-separated arguments, as in Haskell and many other functional programming languages:
 
     map double list
 
@@ -25,17 +31,16 @@ Parentheses are used to enclose expressions.
 
 ## Comments
 
-Comments starting with # continue to the end of the line.
+Comments starting with `#` continue to the end of the line.
 
     # This is a line comment
 
-Block comments are enclosed between pairs of ###
+Block comments are enclosed between pairs of `###`
 
     ###
     Block comments can contain multiple lines.
-    This is an example of a Hello World program:
+    ------------------------------------------
     ###
-    main = print "Hello World!"
 
 Block comments are not nestable. Earlier versions of Lemma had nestable
 comments but I now consider nestable comments to be a misfeature.
@@ -166,6 +171,11 @@ above the definition they annotate:
       {h | t}: {f h | map f t}
     ]
 
+A short same-line type annotation syntax is available for term definitions with no parameters:
+
+
+    x @ Int = 1
+
 ## Datatype definitions
 
 As in Haskell, type and constructor names must begin with capital letters.
@@ -186,7 +196,7 @@ Constructors can have named fields as well:
       HSV[hue @ Real, sat @ Real, value @ Real]
     ]
 
-To define a datatype with only one constructor, which uses named fields, a shorthand syntax is available:
+To define a datatype with only one constructor, which uses named fields and has the same name as the type itself, a shorthand syntax is available:
 
     data Point = [
       x @ Real
@@ -246,8 +256,7 @@ Effect definitions look like this:
     ]
 
 Within a computation, the definition operator `=!` works similar to Haskell's `<-` in monadic do-notation.
-It indicates that the right-hand side should be run once and its value assigned to the left-hand side before
-continuing the computation:
+It indicates that the right-hand side should be run once and its value assigned to the left-hand side before continuing the computation:
 
     @ (s -> s) -> [State s] ()
     modify f = [
@@ -313,7 +322,7 @@ Multiple constraints in the constraint context are separated by commas.
 
 Record field constraints are similar to typeclasses and check if a type variable is a record type with the specified fields:
 
-    @ if a.[x @ Real, y @ Real]: a -> Real
+    @ if a.[x @ n, y @ n], Num n: a -> n
     foo a = a.x + a.y
 
 This concept is necessary to have most general types while using field accessors.
@@ -331,7 +340,7 @@ Below are some common operators that may be unusual for those familiar with Hask
 | `&` | logical and |
 | `?` | logical or  |
 | `~` | concatenation |
-| `\` | function application (like Haskell's $) |
+| `\` | equivalent to Haskell's `$` |
 | `%` | function composition |
 
 ## Miscellaneous rules
