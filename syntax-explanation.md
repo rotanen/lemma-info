@@ -5,11 +5,13 @@ In general, Lemma's syntax looks a lot like Haskell's syntax, but is not identic
 Notably, it is a "square bracket language" - it uses square brackets to enclose
 scoping blocks, lambdas, and similar constructs, which in other languages may be enclosed in curly brackets or indicated by indentation.
 
+This was inspired by Smalltalk's block syntax, but the syntax for lambdas in Lemma is slightly different than Smalltalk.
+
 I prefer square brackets over curly brackets because they are easier to type on most keyboards. The earliest curly-bracket languages emerged when this was not the case (both square and curly brackets were difficult to type on the keyboards of the time.)
 
 Lemma has syntactically meaningful newlines, but not syntactically meaningful indentation. I consider the off-side rule too brittle. In my experience, Lemma's square-bracket syntax is just as easy to type as a Python-style indentation syntax.
 
-I do have a working parser for Lemma syntax (written in Haskell) and it is evolving into a compiler. I admit that I hyperfocused on syntax design because parsers are very easy for me to write.
+I do have a working parser for Lemma syntax (written in Haskell) and it is evolving into a compiler. I also have a "repl" to test the parser interactively. I admit that I hyperfocused on syntax design because parsers are very easy for me to write.
 
 ## Basic expressions
 Function calls use whitespace-separated arguments, as in Haskell and many other
@@ -113,7 +115,7 @@ for that block:
 
 Pattern matching can be used in lambda parameters:
 
-    [Vector a b: Vector c d: Vector (a + b) (c + d)]
+    [Vector a b: Vector c d: Vector (a + c) (b + d)]
 
 Lambdas can contain multiple case alternatives, separated by newlines:
 
@@ -124,7 +126,7 @@ Lambdas can contain multiple case alternatives, separated by newlines:
     ]
 
 Note that if multiple case alternatives are present, any expression body with
-a scoping block will need its own square brackets for the scoping block.
+a scoping block will need its own square brackets for the scoping block. This is because I struggled to write a parser where this is unnecessary, and it may be logically impossible.
 
 Operator sections are enclosed in square brackets too:
 
@@ -224,7 +226,7 @@ Field accessors use dot notation:
 
 Record updaters use a dot followed by square brackets containing one or more field definitions:
 
-    p2 = p.[x = 3]
+    p' = p.[x = 3]
 
 A record updater lambda is a dot followed by square brackets with one or more field definitions:
 
@@ -243,7 +245,7 @@ Effect definitions look like this:
       put @ s -> ()
     ]
 
-Within a computation, the definition operator =! works similar to Haskell's <- in monadic do-notation.
+Within a computation, the definition operator `=!` works similar to Haskell's `<-` in monadic do-notation.
 It indicates that the right-hand side should be run once and its value assigned to the left-hand side before
 continuing the computation:
 
@@ -254,10 +256,10 @@ continuing the computation:
     ]
 
 Note that Lemma's syntax for algebraic effects is not entirely "direct style", but uses
-the =! operator for explicit sequencing. It is closer to Haskell's do-notation without return.
+the `=!` operator for explicit sequencing. It is closer to Haskell's do-notation without `return`.
 This syntax preserves referential transparency but is slightly more verbose than direct style.
 
-The =! operator can only be used in local scope blocks and cannot be used in top-level definitions.
+The `=!` operator can only be used in local scope blocks and cannot be used in top-level definitions.
 
 In type signatures, the type of an effectful computation is indicated by a set of square brackets containing the effects,
 followed by the result type of the computation when completed:
@@ -307,15 +309,50 @@ In type signatures, typeclass constraints appear before a type using this syntax
 
 Multiple constraints in the constraint context are separated by commas.
 
+## Field constraints
+
+Record field constraints are similar to typeclasses and check if a type variable is a record type with the specified fields:
+
+    @ if a.[x @ Real, y @ Real]: a -> Real
+    foo a = a.x + a.y
+
+This concept is necessary to have most general types while using field accessors.
+
+Note that Lemma does not have ad-hoc record types, but field constraints can accomplish much of the same polymorphism.
+
+And it avoids adding subtyping to the type system. I am trying to stick with the "Hindley-Milner with constraints" model.
+
 ## Miscellaneous operators
 
 Below are some common operators that may be unusual for those familiar with Haskell:
 
 | Operator | Meaning |
 | -------- | ------- |
-| `&` | and |
-| `?` | or  |
+| `&` | logical and |
+| `?` | logical or  |
 | `~` | concatenation |
 | `\` | function application (like Haskell's $) |
 | `%` | function composition |
 
+## Miscellaneous rules
+
+If a function call has arguments on more than one line, the call must be wrapped in parentheses:
+
+    (functionWithLotsOfArgs 1 2 3
+     4 5 6
+     7 8 9)
+
+A semicolon can stand in for a newline in many constructions where newlines are a separator, such as scoping blocks.
+
+    [x = 1; y = 2; x + y]
+
+    data Bool = [False; True]
+
+For record definitions and constructors, commas and newlines are interchangeable.
+
+    p = Point[
+      x = 1
+      y = 2
+    ]
+
+The parser is programmed to always parse something like `Circle[radius]` as a record constructor with a field pun, instead of a record constructor with a single positional field that's a block with just an identifier in it. The latter can be expressed as `Circle radius` anyway.
