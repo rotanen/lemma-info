@@ -20,7 +20,7 @@ module HelloWorld
 @ [IO] ()
 main = print "Hello World!"
 ```
-## Basic expressions
+## Basic Expressions
 Function calls use whitespace-separated arguments, as in Haskell and many other
 functional programming languages:
 ```Lemma
@@ -66,7 +66,7 @@ if c > 40: "Scorching"
 else       "Freezing"
 ```
 
-## Term definitions:
+## Term Definitions:
 The syntax for term and function definitions is basically the same as Haskell's:
 
 ```Lemma
@@ -87,7 +87,7 @@ map f {h | t} = {f h | map f t}
 
 However, Lemma currently does not have pattern guards.
 
-## Scoping blocks
+## Scoping Blocks
 Scoping blocks are enclosed in square brackets. They can contain locally-scoped
 term definitions, statements, and end in an expression. The value of the last
 expression is the value of the entire block.
@@ -99,7 +99,7 @@ expression is the value of the entire block.
   x + y
 ]
 ```
-## Case blocks
+## Case Blocks
 
 Case blocks use the following syntax:
 
@@ -123,7 +123,7 @@ case x: y: [
 ]
 ```
 
-## Lambda blocks
+## Lambda Blocks
 Like scoping blocks, lambdas are enclosed in square brackets. Colons appear after
 each parameter.
 
@@ -170,7 +170,7 @@ Operator sections are enclosed in square brackets too:
 [+1]    # equivalent to [x: x + 1]
 ```
 
-## List expressions
+## List Expressions
 In Lemma, lists are enclosed in curly brackets, with comma-separated values:
 
 ```Lemma
@@ -189,7 +189,7 @@ brackets to avoid ambiguity with the other syntactic constructs that use square 
 
 The list concatenation operator is `~`
 
-### List comprehensions
+### List Comprehensions
 
 List comprehensions are enclosed in curly brackets and use a for-loop-like syntax:
 
@@ -197,7 +197,7 @@ List comprehensions are enclosed in curly brackets and use a for-loop-like synta
 {for x in xs, y in ys if x > y: x + y}
 ```
 
-## Type annotations
+## Type Annotations
 
 Type annotations begin with the @ symbol. To annotate a term definition, they appear
 above the definition they annotate:
@@ -216,7 +216,7 @@ A short same-line type annotation syntax is available for term definitions with 
 x @ Int = 1
 ```
 
-## Datatype definitions
+## Datatype Definitions
 
 As in Haskell, type and constructor names must begin with capital letters.
 Term identifiers and type variable names must begin with lowercase letters.
@@ -262,6 +262,7 @@ data Date = [
 ]
 
 defaultDate = Date[]
+ny2024 = Date[year = 2024]
 ```
 
 ## Records
@@ -406,7 +407,7 @@ foo a b c = a + b + c
 
 Multiple constraints in the constraint context are separated by commas.
 
-## Field constraints
+### Field Constraints
 
 Record field constraints are similar to typeclasses and check if a type variable is a record type with the specified fields:
 
@@ -421,7 +422,7 @@ Note that Lemma does not have ad-hoc record types, but field constraints can acc
 
 And it avoids adding subtyping to the type system. I am trying to stick with the "Hindley-Milner with constraints" model.
 
-## Miscellaneous operators
+## Miscellaneous Operators
 
 Below are some common operators that may be unusual for those familiar with Haskell:
 
@@ -433,7 +434,7 @@ Below are some common operators that may be unusual for those familiar with Hask
 | `\` | equivalent to Haskell's `$` |
 | `%` | function composition |
 
-## Miscellaneous rules
+## Miscellaneous Rules
 
 If a function call has arguments on more than one line, the call must be wrapped in parentheses:
 
