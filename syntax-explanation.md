@@ -331,8 +331,8 @@ effect State s = [
 
 ### The `=!` Operator
 
-Within a computation, the definition operator `=!` works similar to Haskell's `<-` in monadic do-notation.
-It indicates that the right-hand side is a computation with side effects, and the left-hand side gets the resulting value of that computation *after* its effects have run:
+The `=!` operator is the "run this and get a value before continuing" operator. It is similar to the `<-` operator in Haskell's monadic do notation.
+It indicates that the right-hand side is a computation with side effects, and the left-hand side is a term that gets the resulting value of that computation *after* its effects have run. And nothing in the block that appears after a `=!` statement can be run until the `=!` statement is run, because it might depend on the value or the side effects of the computation.
 
 ```Lemma
 @ (s -> s) -> [State s] ()
@@ -342,16 +342,13 @@ modify f = [
 ]
 ```
 
-If `v = get` were used here, it would mean that `v` is equivalent to the `get` function, which is not what the programmer wants here, and would lead to a type error in the expression `f v`. Using `v =! get` means that `v` is the *result* of the `get` computation, rather than the computation itself. This distinction is unnecessary for computations without side effects, and the ordinary `=` can be used for those.
+The `=!` operator is never necessary for pure values - the ordinary `=` operator can be used to define terms with pure values. Using `=` with a right-hand side that contains side effects defines a term *that is an effect computation*.
 
-Note that Lemma's syntax for algebraic effects is not entirely "direct style", but uses
-the `=!` operator for explicit sequencing. It is closer to Haskell's do-notation without `return`.
-This syntax preserves referential transparency but is slightly more verbose than direct style.
+Note that Lemma's syntax for algebraic effects is not entirely "direct style", but uses the `=!` operator for explicit sequencing. It is closer to Haskell's do-notation without `return`. This syntax preserves referential transparency but is slightly more verbose than direct style.
 
 The `=!` operator can only be used in local scope blocks and cannot be used in top-level definitions.
 
-In type signatures, the type of an effectful computation is indicated by a set of square brackets containing the effects,
-followed by the result type of the computation when completed:
+In type signatures, the type of an effectful computation is indicated by a set of square brackets containing the effects, followed by the result type of the computation when completed:
 
 ```Lemma
 @ [IO, State Int] String
