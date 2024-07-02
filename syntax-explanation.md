@@ -58,9 +58,12 @@ These are expressions, as in most functional languages.
 In general, "else if" can be omitted if a newline is used instead:
 
 ```Lemma
-if x > 100: "Too much"
-   x > 50:  "A decent amount"
-else        "Not enough"
+if c > 40: "Scorching"
+   c > 30: "Hot"
+   c > 20: "Mild"
+   c > 10: "Cool"
+   c > 0 : "Chilly"
+else       "Freezing"
 ```
 
 ## Term definitions:
