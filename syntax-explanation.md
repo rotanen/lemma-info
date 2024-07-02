@@ -328,11 +328,11 @@ effect State s = [
   put @ s -> ()
 ]
 ```
+
 ### The `=!` Operator
 
 Within a computation, the definition operator `=!` works similar to Haskell's `<-` in monadic do-notation.
-It indicates that the right-hand side should be run once and its value assigned to the left-hand side before
-continuing the computation:
+It indicates that the right-hand side is a computation with side effects, and the left-hand side gets the resulting value of that computation *after* its effects have run:
 
 ```Lemma
 @ (s -> s) -> [State s] ()
@@ -341,6 +341,8 @@ modify f = [
   put (f v)
 ]
 ```
+
+If `v = get` were used here, it would mean that `v` is equivalent to the `get` function, which is not what the programmer wants here, and would lead to a type error in the expression `f v`. Using `v =! get` means that `v` is the *result* of the `get` computation, rather than the computation itself. This distinction is unnecessary for computations without side effects, and the ordinary `=` can be used for those.
 
 Note that Lemma's syntax for algebraic effects is not entirely "direct style", but uses
 the `=!` operator for explicit sequencing. It is closer to Haskell's do-notation without `return`.
@@ -376,6 +378,17 @@ that was called, a vertical bar, and an identifier representing the continuation
 the computation.
 
 Note that Lemma uses "shallow handlers."
+
+Effect handlers can be called like ordinary functions, but they take effect computations as a parameter:
+
+```Lemma
+six @ Int = runState 0 [
+  modify [+1]
+  modify [+1]
+  modify [*3]
+  get
+]
+```
 
 ## Typeclasses
 
