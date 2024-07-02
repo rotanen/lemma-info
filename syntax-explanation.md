@@ -357,7 +357,17 @@ followed by the result type of the computation when completed:
 @ [IO, State Int] String
 ```
 
-The above represents the type of a computation with IO and State Int effects, and a result type of String
+The above represents the type of a computation with `IO` and `State Int` effects, and a result type of `String`.
+
+Effect computation types use row polymorphism, so if the last element in an effect list is a type variable, it represents the rest of the effects in a computation (if any.)
+
+```Lemma
+@ [State Int, e] Int
+```
+
+The above type is polymorphic and represents any computation that has the `State Int` effect and possibly other effects, which would be captured by the row variable `e`.
+
+Note that an effect list can only have one row variable and it must appear at the end of the list.
 
 ### Effect Handlers
 
