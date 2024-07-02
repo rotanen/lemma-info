@@ -1,4 +1,4 @@
-# Lemma syntax
+# Lemma Syntax
 
 ## Summary
 In general, Lemma's syntax looks a lot like Haskell's syntax, but is not identical.
