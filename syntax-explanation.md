@@ -7,7 +7,7 @@ scoping blocks, lambdas, and similar constructs, which in other languages may be
 
 This was inspired by Smalltalk's block syntax, but the syntax for lambdas in Lemma is slightly different than Smalltalk. I can describe it as Nix's lambda syntax enclosed in square brackets, but it's a bit more powerful than that, and I designed it before I had heard of Nix.
 
-I prefer square brackets over curly brackets because they are easier to type on most keyboards. Curly brackets are still used in Lemma, but only for lists, in order to avoid ambiguity with the constructs that use s
+I prefer square brackets over curly brackets because they are easier to type on most keyboards. Curly brackets are still used in Lemma, but only for lists, in order to avoid ambiguity with the constructs that use square brackets.
 
 Lemma has syntactically meaningful newlines, but not syntactically meaningful indentation. I consider the off-side rule too brittle. In my experience, Lemma's square-bracket syntax is just as easy to type as a Python-style indentation syntax.
 
