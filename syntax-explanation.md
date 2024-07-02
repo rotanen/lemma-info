@@ -342,7 +342,7 @@ modify f = [
 ]
 ```
 
-The `=!` operator is never necessary for pure values - the ordinary `=` operator can be used to define terms with pure values. Using `=` with a right-hand side that contains side effects defines a term *that is an effect computation*.
+The `=!` operator is never necessary for pure values - the ordinary `=` operator can be used to define terms with pure values. Using `=` with a right-hand side that contains side effects defines a term *that is an effect computation*. Effect computations are pure values. Scoping blocks with `=!` statements in them are used to construct effect computations out of other effect computations.
 
 Note that Lemma's syntax for algebraic effects is not entirely "direct style", but uses the `=!` operator for explicit sequencing. It is closer to Haskell's do-notation without `return`. This syntax preserves referential transparency but is slightly more verbose than direct style.
 
@@ -396,6 +396,8 @@ six @ Int = runState 0 [
   get
 ]
 ```
+
+Note that in the above example, the scoping block contains several `modify [..]` expressions that are functioning as statements. These indicate that these computations run in sequence, but the result value of the computations are discarded. In this case, the result values of these `modify` calls are all `()`, so discarding them makes sense.
 
 ## Typeclasses
 
