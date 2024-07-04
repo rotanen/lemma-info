@@ -355,6 +355,8 @@ Note that Lemma's syntax for algebraic effects is not entirely "direct style", b
 
 The `=!` operator can only be used in local scope blocks and cannot be used in top-level definitions.
 
+### Effect Computation Types
+
 In type signatures, the type of an effectful computation is indicated by a set of square brackets containing the effects, followed by the result type of the computation when completed:
 
 ```Lemma
