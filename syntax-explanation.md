@@ -287,7 +287,7 @@ Field "puns" are allowed:
 ```Lemma
 x = 1
 y = 2
-p = Point[x, y]
+p = Point[x, y]   # equivalent to Point[x = x, y = y]
 ```
 
 Field accessors use dot notation:
