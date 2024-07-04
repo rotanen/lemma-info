@@ -99,6 +99,13 @@ expression is the value of the entire block.
   x + y
 ]
 ```
+
+```Lemma
+[
+  print "Hello"
+  print "World!"
+]
+```
 ## Case Blocks
 
 Case blocks use the following syntax:
