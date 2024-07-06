@@ -209,6 +209,15 @@ List comprehensions are enclosed in curly brackets and use a for-loop-like synta
 ```Lemma
 {for x in xs for y in ys if x > y: x + y}
 ```
+Newlines are allowed before the keywords `for` and `if`, and after
+the colon:
+
+```Lemma
+{for x in xs
+ for y in ys
+ if x > y:
+ x + y}
+```
 
 ## For Loops
 
