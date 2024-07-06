@@ -207,7 +207,7 @@ The list concatenation operator is `~`
 List comprehensions are enclosed in curly brackets and use a for-loop-like syntax:
 
 ```Lemma
-{for x in xs, y in ys if x > y: x + y}
+{for x in xs for y in ys if x > y: x + y}
 ```
 
 ## For Loops
@@ -218,7 +218,7 @@ For loops use the same syntax as the interior of a list compehension, but they a
 [
   xs = {1, 2, 3, 4}
   ys = {2, 4, 5}
-  for x in xs, y in ys if x > y: print (x + y)
+  for x in xs for y in ys if x > y: print (x + y)
 ]
 ```
 
