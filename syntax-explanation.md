@@ -53,9 +53,16 @@ If-else conditionals look like this:
 ```Lemma
 if a > b: a else b
 ```
+
 These are expressions, as in most functional languages.
+
+However, if without else is a statement, not an expression, so it can only appear inside of blocks.
+
+```Lemma
+[if True: print "This runs"]
+```
 ### Multi-Way If
-In general, "else if" can be omitted if a newline is used instead:
+In general, `else if` can be omitted if a newline is used instead:
 
 ```Lemma
 if c > 40: "Scorching"
@@ -191,8 +198,7 @@ List "constructor cells" use a vertical bar to separate the head from the tail:
 {1, 2, 3 | {4, 5, 6}}
 ```
 
-This syntax is based on Prolog and Erlang, but curly brackets are used instead of square
-brackets to avoid ambiguity with the other syntactic constructs that use square brackets (particularly record field puns.)
+This syntax is based on Prolog and Erlang, but curly brackets are used instead of square brackets to avoid ambiguity with the other syntactic constructs that use square brackets (particularly record field puns.)
 
 The list concatenation operator is `~`
 
