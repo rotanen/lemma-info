@@ -287,7 +287,7 @@ data Point = [
 
 Note that in these record field syntaxes, commas and newlines are interchangeable.
 
-### Record Field Defaults
+### Field Default Values
 Records with named fields can have default values:
 
 ```Lemma
@@ -306,9 +306,9 @@ ny2024 = Date[year = 2024]
 There are two syntaxes for record constructors - positional fields and named fields.
 
 ```Lemma
-Point 1 2
-Point[x = 1, y = 2]
-Point[y = 2, x = 1]
+Point 1 2            # positional
+Point[x = 1, y = 2]  # named
+Point[y = 2, x = 1]  # order does not matter in named field constructors
 ```
 
 Field "puns" are allowed:
