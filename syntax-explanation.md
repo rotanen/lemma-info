@@ -210,6 +210,20 @@ List comprehensions are enclosed in curly brackets and use a for-loop-like synta
 {for x in xs, y in ys if x > y: x + y}
 ```
 
+## For Loops
+
+For loops use the same syntax as the interior of a list compehension, but they are statements, not expressions, which means that they can only appear in blocks:
+
+```Lemma
+[
+  xs = {1, 2, 3, 4}
+  ys = {2, 4, 5}
+  for x in xs, y in ys if x > y: print (x + y)
+]
+```
+
+For loops aren't expressions in order to prevent a list comprehension from being parsed as a single-element list containing a for loop expression.
+
 ## Type Annotations
 
 Type annotations begin with the @ symbol. To annotate a term definition, they appear
