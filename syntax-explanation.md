@@ -13,6 +13,8 @@ Lemma has syntactically meaningful newlines, but not syntactically meaningful in
 
 I do have a working parser for Lemma syntax (written in Haskell) and it is evolving into a compiler - I have written the renamer and am mostly finished with the type inference module. I also have a "repl" to test the parser and type checker interactively. I admit that I hyperfocused on syntax design because parsers are very easy for me to write.
 
+In this document, many syntax examples appear on one line, but that doesn't necessarily mean that newlines are disallowed in that construct. It just means that I don't want to go into details about where newlines are allowed and where they are not.
+
 ## Hello World!
 ```Lemma
 module HelloWorld
@@ -341,7 +343,7 @@ A record updater lambda is a dot followed by square brackets with one or more fi
 Similarly, an accessor lambda is a field accessor enclosed in square brackets:
 
 ```Lemma
-[.name]        # equivalent to [a: a.name]
+[.name]     # equivalent to [a: a.name]
 ```
 
 ## Tuples
@@ -480,7 +482,7 @@ This concept is necessary to have most general types while using field accessors
 
 Note that Lemma does not have ad-hoc record types, but field constraints can accomplish much of the same polymorphism.
 
-And it avoids adding subtyping to the type system. I am trying to stick with the "Hindley-Milner with constraints" model.
+And it avoids adding subtyping to the type system. I am trying to stick with the "Hindley-Milner with qualified types" model.
 
 ## Miscellaneous Operators
 
