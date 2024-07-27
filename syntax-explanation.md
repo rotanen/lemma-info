@@ -58,7 +58,7 @@ if a > b: a else b
 
 These are expressions, as in most functional languages.
 
-However, if without else is a statement, not an expression, so it can only appear inside of blocks.
+However, `if` without `else` is a statement, not an expression, so it can only appear inside of blocks.
 
 ```Lemma
 [if True: print "This runs"]
